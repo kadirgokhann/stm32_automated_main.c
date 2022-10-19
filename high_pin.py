@@ -37,12 +37,14 @@ int main(void)  {"{"}
     for(index=0;index<wait_millisecond*666;index++);
     wait_counter = wait_counter + 1;
     {self._function_mode}
-    GPIOx_ODR |= (1 << {str(pin)});
-    for(index=0;index<wait_millisecond*666;index++);
-    wait_counter = wait_counter + 1;
-    GPIOx_ODR &= ~(1 << {str(pin)});
-    for(index=0;index<wait_millisecond*666;index++);
-    wait_counter = wait_counter + 1;
+    while (1){"{"}
+        GPIOx_ODR |= (1 << {str(pin)});
+        for(index=0;index<wait_millisecond*666;index++);
+        wait_counter = wait_counter + 1;
+        GPIOx_ODR &= ~(1 << {str(pin)});
+        for(index=0;index<wait_millisecond*666;index++);
+        wait_counter = wait_counter + 1;
+    {"}"}
     return 0;
 {"}"}
                     '''
@@ -56,5 +58,5 @@ int main(void)  {"{"}
 
 
 if __name__ == "__main__":
-    cmpe443 = CMPE443("PE", 14, "01")
+    cmpe443 = CMPE443("PA", 9, "01")
     cmpe443.write()
