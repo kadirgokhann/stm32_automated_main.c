@@ -17,12 +17,15 @@ class CMPE443:
             if mode == "01":
                 number = int(pin)*2+1
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"
+                self._function_mode = f"GPIOx_MODER |= (1 << {str(number-1)});"
             if mode == "11":
-                self._function_mode = ""
+                self._function_mode = f"GPIOx_MODER |= (1 << {str(number-1)});"
+                self._function_mode = f"GPIOx_MODER |= (1 << {str(number)});"
             if mode == "00":
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number-1)});"
             if mode == "10":
+                self._function_mode = f"GPIOx_MODER |= (1 << {str(number)});"
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number-1)});"
             self.code = f'''
 #define {self.bus} *((volatile uint32_t *) {self.add_of_bus})
