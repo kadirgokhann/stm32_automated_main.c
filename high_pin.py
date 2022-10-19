@@ -17,8 +17,8 @@ class CMPE443:
             number = int(pin)*2+1
             if mode == "01":
 
-                self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"
-                self._function_mode += f"\n    GPIOx_MODER |= (1 << {str(number-1)});"
+                self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"         # to do 0
+                self._function_mode += f"\n    GPIOx_MODER |= (1 << {str(number-1)});" # to do 1
             if mode == "11":
                 self._function_mode = f"GPIOx_MODER |= (1 << {str(number-1)});"
                 self._function_mode += f"\n    GPIOx_MODER |= (1 << {str(number)});"
