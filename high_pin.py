@@ -14,19 +14,20 @@ class CMPE443:
             self.add_of_bus = "0x4002104C"
             self.GPIOx_MODER = str(hex(self._dict_address_gpio_moders[port[1]]))
             self.GPIOx_ODR = str(hex(self._dict_address_gpio_moders[port[1]] + 0x14))
+            number = int(pin)*2+1
             if mode == "01":
-                number = int(pin)*2+1
+
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"
-                self._function_mode = f"GPIOx_MODER |= (1 << {str(number-1)});"
+                self._function_mode += f"\n    GPIOx_MODER |= (1 << {str(number-1)});"
             if mode == "11":
                 self._function_mode = f"GPIOx_MODER |= (1 << {str(number-1)});"
-                self._function_mode = f"GPIOx_MODER |= (1 << {str(number)});"
+                self._function_mode += f"\n    GPIOx_MODER |= (1 << {str(number)});"
             if mode == "00":
                 self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number)});"
-                self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number-1)});"
+                self._function_mode += f"\n    GPIOx_MODER &= ~(1 << {str(number-1)});"
             if mode == "10":
                 self._function_mode = f"GPIOx_MODER |= (1 << {str(number)});"
-                self._function_mode = f"GPIOx_MODER &= ~(1 << {str(number-1)});"
+                self._function_mode += f"\n    GPIOx_MODER &= ~(1 << {str(number-1)});"
             self.code = f'''
 #define {self.bus} *((volatile uint32_t *) {self.add_of_bus})
 #define GPIOx_MODER *((volatile uint32_t *) {str(self.GPIOx_MODER)})
