@@ -1,8 +1,3 @@
-from re import S
-from statistics import mode
-from urllib.parse import parse_qsl
-
-
 class CMPE443:
     "This is the doc"
 
@@ -17,6 +12,7 @@ class CMPE443:
         self.globals=[]
         self.main=[]
         self.bus=""
+    
     def _enable_bus(self,port):
         print("Register of the enabler bus is RCC_AHB2ENR")
         RCC_AHB2ENR = "0x4002104C"
@@ -66,6 +62,7 @@ class CMPE443:
             self.main.append(f"GPIO{port}_ODR |= (1 << {str(pin)});")
         if open_close == 0:
             self.main.append(f"GPIO{port}_ODR &= ~(1 << {str(pin)});")
+    
     def _set_idr(self,port,pin,open_close:int):
         GPIOx_IDR = str(hex(self._dict_address_gpio_moders[port] + 0x10))  
         self.odrs.append({f"GPIO{port}":GPIOx_IDR})
