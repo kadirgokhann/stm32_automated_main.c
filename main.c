@@ -20,8 +20,10 @@ int main(void)  {
 	GPIOA_MODER |= (1 << 18);
 	while(1) {
 	if(GPIOC_IDR>>13== 1) {
+	//When pressed
 	GPIOA_ODR |= (1 << 9);
 	}else{
+	//When not pressed
 	GPIOA_ODR &= ~(1 << 9);
 	}
 	}
